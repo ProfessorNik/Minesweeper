@@ -2,11 +2,10 @@ package com.minesweeper.lab3.game.ConsoleView;
 
 import com.minesweeper.lab3.game.Cells;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class EndGameState extends ConsoleGameViewState {
-    EndGameState(ConsoleGameView view){
+public class LostGameState extends ConsoleGameViewState {
+    LostGameState(ConsoleGameView view){
         super(view);
     }
 
@@ -17,7 +16,9 @@ public class EndGameState extends ConsoleGameViewState {
     }
 
     private void waitingStep(){
-        view.writer.print("Waiting \"Enter\" for exit to main menu: ");
+        view.writer.println("You lost!");
+        view.writer.println("Waiting \"Enter\" for exit to main menu: ");
         view.reader.nextLine();
+        view.controller.closeGame();
     }
 }

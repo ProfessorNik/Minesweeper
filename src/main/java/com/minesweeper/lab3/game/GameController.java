@@ -1,9 +1,9 @@
 package com.minesweeper.lab3.game;
 
 public class GameController {
-    public GameController(GameModel model, GameView view) {
+    public GameController(GameService service, GameModel model) {
+        this.service = service;
         this.model = model;
-        this.view = view;
     }
 
     public void setStep(int x, int y){
@@ -18,10 +18,10 @@ public class GameController {
         model.deleteFlag(x, y);
     }
 
-    public void endGame(){
-        //TODO endGame
+    public void closeGame(){
+        service.exitToMainMenu();
     }
 
-    private GameModel model;
-    private GameView view;
+    private final GameService service;
+    private final GameModel model;
 }

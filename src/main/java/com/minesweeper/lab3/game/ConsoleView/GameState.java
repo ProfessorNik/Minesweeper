@@ -72,6 +72,7 @@ class InputToStep extends InputToAction{
         Matcher wordMatcher = word.matcher(input);
         wordMatcher.find();
         int x = Integer.parseInt(wordMatcher.group());
+        wordMatcher.find();
         int y = Integer.parseInt(wordMatcher.group());
         controller.setStep(x, y);
     }
@@ -87,7 +88,9 @@ class InputToAddFlag extends InputToAction{
         Matcher wordMatcher = word.matcher(input);
         wordMatcher.find();
         wordMatcher.group();
+        wordMatcher.find();
         int x = Integer.parseInt(wordMatcher.group());
+        wordMatcher.find();
         int y = Integer.parseInt(wordMatcher.group());
         controller.setFlag(x, y);
     }
@@ -101,19 +104,22 @@ class InputToDelFlag extends InputToAction{
     public void doAction(String input) {
         Matcher wordMatcher = word.matcher(input);
         wordMatcher.find();
+        wordMatcher.group();
+        wordMatcher.find();
         int x = Integer.parseInt(wordMatcher.group());
+        wordMatcher.find();
         int y = Integer.parseInt(wordMatcher.group());
-        controller.setStep(x, y);
+        controller.deleteFlag(x, y);
     }
 }
 
 class InputToExit extends InputToAction{
     InputToExit(GameController controller){
-        super(Pattern.compile("\\s*\\d+\\s+\\d+\\s*"), controller);
+        super(Pattern.compile("\\s*q\\s*"), controller);
     }
     @Override
     public void doAction(String input) {
-        controller.endGame();
+        controller.closeGame();
     }
 }
 

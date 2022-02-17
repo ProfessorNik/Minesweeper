@@ -1,25 +1,36 @@
 package com.minesweeper.lab3;
 
-import com.minesweeper.lab3.game.field.BackgroundField;
-import com.minesweeper.lab3.game.Cells;
-
-import java.util.List;
+import com.minesweeper.lab3.game.GameService;
+import com.minesweeper.lab3.mainmenu.MainMenuService;
 
 public class Minesweeper {
-    public static void main(String args[]){
-        BackgroundField field = new BackgroundField(9, 9, 10);
-        field.generateField();
-        List<Cells> list = field.getField();
-        int i = 0;
-        for(Cells sell : list){
-            if (i < 8) {
-                System.out.print(sell + " ");
-                i++;
-            }
-            else{
-                System.out.println(sell);
-                i = 0;
-            }
-        }
+    Minesweeper(Service.UI type){
+        this.uiType = type;
     }
+
+    public void startNewGame() {
+        curService = new GameService(this, uiType);
+        curService.start();
+    }
+
+
+    public void showHighScores() {
+        
+    }
+
+    public void showSettings() {
+
+    }
+
+    public void toMainMenu() {
+        curService = new MainMenuService(this, uiType);
+        curService.start();
+    }
+
+    public void exit() {
+
+    }
+
+    private Service curService;
+    private Service.UI uiType;
 }

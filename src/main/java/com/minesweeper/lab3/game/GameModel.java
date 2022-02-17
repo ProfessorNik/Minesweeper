@@ -3,15 +3,11 @@ package com.minesweeper.lab3.game;
 import com.minesweeper.lab3.game.field.BackgroundField;
 import com.minesweeper.lab3.game.field.ForegroundField;
 import com.minesweeper.lab3.game.observer.GameObservable;
-import com.minesweeper.lab3.game.observer.GameObserver;
 
 import java.util.List;
 
 public class GameModel extends GameObservable {
-    GameModel(int sizeX, int sizeY, int numBomb) {
-        this.sizeX = sizeX;
-        this.sizeY = sizeY;
-        this.numBomb = numBomb;
+    GameModel() {
     }
 
     public void newGame() {
@@ -20,6 +16,9 @@ public class GameModel extends GameObservable {
 
         backgroundField = new BackgroundField(sizeX, sizeY, numBomb);
         backgroundField.generateField();
+
+        curState = State.GAME;
+        notifyObservers();
     }
 
     public void setStep(int x, int y) {
@@ -27,27 +26,53 @@ public class GameModel extends GameObservable {
             Cells openingCell = backgroundField.getCell(x, y);
             if (openingCell == Cells.BOMB) {
                 foregroundField.copyField(backgroundField);
-                endGame();
+                lostGame();
+                return;
             } else {
                 foregroundField.setCell(x, y, openingCell);
+                if(isWinGame()){
+                    winGame();
+                    return;
+                }
             }
         }
+        notifyObservers();
     }
 
     public void setFlag(int x, int y) {
         if(foregroundField.isUnknownCell(x, y)) {
             foregroundField.setCell(x, y, Cells.FLAG);
         }
+        notifyObservers();
     }
 
     public void deleteFlag(int x, int y){
         if(foregroundField.getCell(x, y) == Cells.FLAG) {
             foregroundField.setCell(x, y, Cells.UNKNOWN);
         }
+        notifyObservers();
     }
 
-    public void endGame() {
-        //TODO endgame
+    public void lostGame() {
+        curState = State.LOST_GAME;
+        notifyObservers();
+    }
+
+    public void winGame() {
+        curState = State.WIN_GAME;
+        notifyObservers();
+    }
+
+    public boolean isWinGame() {
+        for(int x = 0; x < sizeX; x++){
+            for(int y = 0; y < sizeY; y++){
+                if(foregroundField.isUnknownCell(x, y)
+                        && backgroundField.getCell(x, y) != Cells.BOMB){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override
@@ -55,9 +80,26 @@ public class GameModel extends GameObservable {
         return foregroundField.getField();
     }
 
-    private final int sizeX;
-    private final int sizeY;
-    private final int numBomb;
+    @Override
+    public State getState() {
+        return curState;
+    }
+
+    @Override
+    public int getSizeX() {
+        return sizeX;
+    }
+
+    @Override
+    public int getSizeY() {
+        return sizeY;
+    }
+
+
+    private final int sizeX = 9;
+    private final int sizeY = 9;
+    private final int numBomb = 10;
+    private State curState;
     private BackgroundField backgroundField;
     private ForegroundField foregroundField;
 }
