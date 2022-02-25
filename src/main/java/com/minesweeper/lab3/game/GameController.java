@@ -19,6 +19,7 @@ public class GameController {
     }
 
     public void closeGame(){
+        model.endGame();
         service.exitToMainMenu();
     }
 

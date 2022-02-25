@@ -22,5 +22,5 @@ public class Observable {
         }
     }
 
-    private List<Observer> listeners;
+    private final List<Observer> listeners;
 }

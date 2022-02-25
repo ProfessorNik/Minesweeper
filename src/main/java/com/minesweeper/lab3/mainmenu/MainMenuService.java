@@ -1,15 +1,16 @@
 package com.minesweeper.lab3.mainmenu;
 
-import com.minesweeper.lab3.Minesweeper;
+import com.minesweeper.lab3.MinesweeperLauncher;
 import com.minesweeper.lab3.Service;
-import com.minesweeper.lab3.game.ConsoleView.ConsoleGameView;
-import com.minesweeper.lab3.game.GameController;
-import com.minesweeper.lab3.game.GameModel;
-import com.minesweeper.lab3.game.GameView;
 
 public class MainMenuService implements Service {
-    public MainMenuService(Minesweeper minesweeper, UI type){
-        this.minesweeper = minesweeper;
+    private final MainMenuModel model;
+    private final MainMenuController controller;
+    private final MinesweeperLauncher launcher;
+    private  ConsoleMainMenuView view;
+
+    public MainMenuService(MinesweeperLauncher minesweeperLauncher, UI type){
+        this.launcher = minesweeperLauncher;
         model = new MainMenuModel();
         controller = new MainMenuController(this, model);
         buildUI(type);
@@ -21,23 +22,19 @@ public class MainMenuService implements Service {
     }
 
     public void goTo(MenuOptions options){
+        view.hide();
+
         switch (options){
-            case NEW_GAME -> minesweeper.startNewGame();
-            case HIGH_SCORES -> minesweeper.showHighScores();
-            case SETTINGS -> minesweeper.showSettings();
-            case EXIT -> minesweeper.exit();
+            case NEW_GAME -> launcher.startNewGame();
+            case HIGH_SCORES -> launcher.showHighScores();
+            case SETTINGS -> launcher.showSettings();
+            case EXIT -> launcher.exit();
         }
     }
-
 
     @Override
     public void start() {
         model.startMainMenu();
+        view.show();
     }
-
-
-    private final MainMenuModel model;
-    private final MainMenuController controller;
-    private final Minesweeper minesweeper;
-    private  ConsoleMainMenuView view;
 }

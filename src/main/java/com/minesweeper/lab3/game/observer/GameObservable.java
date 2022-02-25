@@ -10,4 +10,5 @@ public abstract class GameObservable extends Observable {
     abstract public State getState();
     abstract public int getSizeX();
     abstract public int getSizeY();
+    abstract public long getTimePassed();
 }

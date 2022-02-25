@@ -1,10 +1,13 @@
 package com.minesweeper.lab3;
 
-import com.minesweeper.lab3.game.GameService;
+import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class MinesweeperRunner {
     public static void main(String args[]){
-        Minesweeper minesweeper = new Minesweeper(Service.UI.Console);
-        minesweeper.toMainMenu();
+        System.out.println("Main thread: " + Thread.currentThread().getName());
+        MinesweeperLauncher launcher = new MinesweeperLauncher(Service.UI.Console);
+        launcher.toMainMenu();
     }
 }
+

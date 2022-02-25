@@ -1,5 +1,6 @@
 package com.minesweeper.lab3.game.ConsoleView;
 
+import com.minesweeper.lab3.consoleview.utility.ConsoleView;
 import com.minesweeper.lab3.game.Cells;
 import com.minesweeper.lab3.game.GameController;
 import com.minesweeper.lab3.game.GameView;
@@ -8,7 +9,7 @@ import com.minesweeper.lab3.game.observer.GameObservable;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-public class ConsoleGameView implements GameView {
+public class ConsoleGameView extends ConsoleView implements GameView{
     public ConsoleGameView(GameObservable observable, GameController controller) {
         this.observable = observable;
         this.observable.registerObserver(this);
@@ -16,6 +17,39 @@ public class ConsoleGameView implements GameView {
         writer = new PrintWriter(System.out, true);
         reader = new Scanner(System.in);
     }
+
+    private void readDataFromModel(){
+        state = ConsoleGameViewState.changeState(observable.getState(), this);
+        sizeX = observable.getSizeX();
+        sizeY = observable.getSizeY();
+        timePassed = observable.getTimePassed();
+    }
+
+    @Override
+    synchronized public void update() {
+        readDataFromModel();
+        redraw();
+    }
+
+    synchronized public void draw(PrintWriter writer){
+        state.drawUI(observable.getField(), writer);
+    }
+
+    synchronized public void read(Scanner reader) {
+        state.readUserInput(reader);
+    }
+
+
+    protected int sizeX;
+    protected int sizeY;
+    protected long timePassed = 0;
+    protected PrintWriter writer;
+    protected Scanner reader;
+    protected GameController controller;
+    private final GameObservable observable;
+    private ConsoleGameViewState state;
+    boolean isShow = false;
+    boolean hasUpdate = false;
 
     protected char cellsToChar(Cells cell) {
         return switch (cell) {
@@ -40,22 +74,4 @@ public class ConsoleGameView implements GameView {
         writer.println("Write: \"df x y\", dell the flag ");
         writer.println("Write: \"q\", for exit");
     }
-
-    @Override
-    public void update() {
-        //TODO clear console
-        sizeX = observable.getSizeX();
-        sizeY = observable.getSizeY();
-        state = ConsoleGameViewState.changeState(observable.getState(), this);
-        state.drawUI(observable.getField());
-    }
-
-    protected int sizeX;
-    protected int sizeY;
-
-    protected PrintWriter writer;
-    protected Scanner reader;
-    protected GameController controller;
-    private final GameObservable observable;
-    private ConsoleGameViewState state;
 }

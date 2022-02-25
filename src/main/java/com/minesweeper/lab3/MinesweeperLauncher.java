@@ -3,8 +3,8 @@ package com.minesweeper.lab3;
 import com.minesweeper.lab3.game.GameService;
 import com.minesweeper.lab3.mainmenu.MainMenuService;
 
-public class Minesweeper {
-    Minesweeper(Service.UI type){
+public class MinesweeperLauncher {
+    MinesweeperLauncher(Service.UI type){
         this.uiType = type;
     }
 

@@ -3,7 +3,10 @@ package com.minesweeper.lab3.game.ConsoleView;
 import com.minesweeper.lab3.game.Cells;
 import com.minesweeper.lab3.game.State;
 
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public abstract class ConsoleGameViewState {
 
@@ -20,7 +23,8 @@ public abstract class ConsoleGameViewState {
         this.view = view;
     }
 
-    abstract public void drawUI(List<Cells> field);
+    abstract public void drawUI(List<Cells> field, PrintWriter writer);
+    abstract public void readUserInput(Scanner scanner);
 
     protected void drawField(List<Cells> field) {
         view.writer.print("  ");
@@ -35,5 +39,13 @@ public abstract class ConsoleGameViewState {
             view.writer.println();
         }
         view.writer.println();
+    }
+
+    protected void printPassedTime(){
+        long minutesPassed = TimeUnit.MILLISECONDS.toMinutes(view.timePassed);
+        long secondsPassed = TimeUnit.MILLISECONDS.toSeconds(view.timePassed) - TimeUnit.MINUTES.toSeconds(minutesPassed);
+        view.writer.println("Your time: " +
+                minutesPassed + ":" +
+                secondsPassed);
     }
 }
