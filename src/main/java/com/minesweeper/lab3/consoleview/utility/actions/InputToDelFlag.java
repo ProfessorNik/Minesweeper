@@ -10,6 +10,7 @@ public class InputToDelFlag extends InputToAction {
 
     public InputToDelFlag(Action action) {
         super(Pattern.compile("\\s*df\\s+\\d+\\s+\\d+\\s*"));
+        this.action = action;
     }
 
     public interface Action{

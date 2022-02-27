@@ -10,7 +10,7 @@ public class InputToChangeName extends InputToAction{
         this.action = action;
     }
 
-    interface Action{
+    public interface Action{
         void doAction(String string);
     }
 

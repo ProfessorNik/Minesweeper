@@ -12,6 +12,7 @@ public class GameModel extends GameObservable {
     }
 
     public void newGame() {
+        downloadSettings();
         timer = new GameTimer(this);
 
         foregroundField = new ForegroundField(sizeX, sizeY);

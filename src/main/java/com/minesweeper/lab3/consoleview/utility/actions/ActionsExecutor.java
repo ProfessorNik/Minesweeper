@@ -1,5 +1,6 @@
 package com.minesweeper.lab3.consoleview.utility.actions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActionsExecutor {
@@ -21,6 +22,9 @@ public class ActionsExecutor {
 
     public static class Builder{
         private List<InputToAction> actions;
+        public Builder(){
+            actions = new ArrayList<>();
+        }
 
         public Builder addAction(InputToAction action){
             actions.add(action);

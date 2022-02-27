@@ -7,7 +7,7 @@ public class MainMenuService implements Service {
     private final MainMenuModel model;
     private final MainMenuController controller;
     private final MinesweeperLauncher launcher;
-    private  ConsoleMainMenuView view;
+    private  MainMenuView view;
 
     public MainMenuService(MinesweeperLauncher minesweeperLauncher, UI type){
         this.launcher = minesweeperLauncher;
@@ -17,8 +17,10 @@ public class MainMenuService implements Service {
     }
 
     private void buildUI(UI type){
-        view = new ConsoleMainMenuView(model, controller);
-        //TODO change UI
+        if(type == UI.Console)
+            view = new ConsoleMainMenuView(model, controller);
+        else if(type == UI.Graphic)
+            view = new GraphicMainMenuView(model, controller);
     }
 
     public void goTo(MenuOptions options){

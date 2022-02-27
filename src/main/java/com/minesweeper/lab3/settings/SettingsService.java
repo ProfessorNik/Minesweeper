@@ -17,8 +17,10 @@ public class SettingsService implements Service {
     }
 
     private void buildUI(UI type){
-        view = new ConsoleSettingsView(model, controller);
-        //TODO change UI
+        if(type == UI.Console)
+            view = new ConsoleSettingsView(model, controller);
+        else if(type == UI.Graphic)
+            view = new GraphicSettingsView(model, controller);
     }
 
     @Override

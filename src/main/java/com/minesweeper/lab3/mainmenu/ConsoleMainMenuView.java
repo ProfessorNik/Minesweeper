@@ -18,15 +18,6 @@ public class ConsoleMainMenuView extends ConsoleView implements MainMenuView {
         observable.registerObserver(this);
     }
 
-    private String menuOptionsToString(MenuOptions option) {
-        return switch (option) {
-            case NEW_GAME -> "New game";
-            case SETTINGS -> "Settings";
-            case EXIT -> "Exit";
-            case HIGH_SCORES -> "High scores";
-        };
-    }
-
     @Override
     synchronized public void draw(PrintWriter writer){
         showMenu();
@@ -40,7 +31,7 @@ public class ConsoleMainMenuView extends ConsoleView implements MainMenuView {
     private void showMenu(){
         writer.println("\t\tMinesweeper\t\t");
         for(int i = 0; i < options.size(); i++){
-            writer.println((i+1) + ". " + menuOptionsToString(options.get(i)));
+            writer.println((i+1) + ". " + MenuOptions.menuOptionsToString(options.get(i)));
         }
     }
 

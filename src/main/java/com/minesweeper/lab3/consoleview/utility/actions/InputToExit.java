@@ -9,7 +9,7 @@ public class InputToExit extends InputToAction {
 
     public InputToExit(Action action) {
         super(Pattern.compile("\\s*q\\s*"));
-
+        this.action = action;
     }
 
     public interface Action{

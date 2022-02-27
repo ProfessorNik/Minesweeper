@@ -5,12 +5,12 @@ import java.util.regex.Pattern;
 
 public class InputToChangeSettings extends InputToAction{
     private Action action;
-    InputToChangeSettings(Action action) {
+    public InputToChangeSettings(Action action) {
         super(Pattern.compile("\\s*field\\s+\\d+\\s+\\d+\\s+\\d+\\s*"));
         this.action = action;
     }
 
-    interface Action{
+    public interface Action{
         void doAction(int sizeX, int sizeY, int numBomb);
     }
 
